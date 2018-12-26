@@ -8,7 +8,10 @@ extern YYSTYPE yylval;
 
 %%
 
-[0-9]*\.?[0-9]*       {return NUM;}
+[0-9]*\.?[0-9]*       {
+	sscanf(yytext, "%lf", &yylval);
+	return NUM;
+}
 
 somar           {return SOMAR;}
 subtrair        {return SUBTRAIR;}

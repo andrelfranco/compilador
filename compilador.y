@@ -17,28 +17,17 @@ calc:
 ;
 
 line: NEWLINE { printf("NOVA LINHA!\n"); }
-		| EXPRESSAO FIM_LINHA NEWLINE { printf("NOVA LINHA!\n");}
+		| EXPRESSAO FIM_LINHA NEWLINE { printf("Resultado = %f\n", $$);}
 		| QUIT NEWLINE  { printf("Arquivo Aceito!\n"); exit(0);}
 ;
 
-EXPRESSAO: NUM
-		|	SUM 
-		|	SUB
-		|	MULT
-		|	DIV
+EXPRESSAO: NUM {$$ = $1;}
+		|	SOMAR '{' EXPRESSAO ',' EXPRESSAO '}' {$$ = $3 + $5;} 
+		|	SUBTRAIR '{' EXPRESSAO ',' EXPRESSAO '}' {$$ = $3 - $5;}
+		|	MULTIPLICAR '{' EXPRESSAO ',' EXPRESSAO '}' {$$ = $3 * $5;}
+		|	DIVIDIR '{' EXPRESSAO ',' EXPRESSAO '}' {$$ = $3 / $5;}
 ;
 
-SUM: SOMAR '{' EXPRESSAO ',' EXPRESSAO '}' 
-;
-
-SUB: SUBTRAIR '{' EXPRESSAO ',' EXPRESSAO '}' 
-;
-
-MULT: MULTIPLICAR '{' EXPRESSAO ',' EXPRESSAO '}' 
-;
-
-DIV: DIVIDIR '{' EXPRESSAO ',' EXPRESSAO '}' 
-;
 
 %%
 
