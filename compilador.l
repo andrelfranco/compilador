@@ -8,40 +8,26 @@ extern YYSTYPE yylval;
 
 %%
 
-[0-9]*\.?[0-9]*       {
-                printf( "numero: %s (%d)\n", yytext,
-                        atoi( yytext ) );
-                return NUM;
-                }
+[0-9]*\.?[0-9]*       {return NUM;}
 
-somar|subtrair|multiplicar|dividir	        {
-                printf( "Função: %s\n", yytext );
-                return FUNCAO;
-                }
+somar           {return SOMAR;}
+subtrair        {return SUBTRAIR;}
+multiplicar     {return MULTIPLICAR;}
+dividir         {return DIVIDIR;}
 
-"{"	{
-            printf("Parâmetros da funcao: $s \n", yytext);
-            return '{';
-        }
-"}" {
-            printf("Parâmetros da funcao: $s \n", yytext);
-            return '}';
-        }
 
-[ \t\n\r]+	printf("Espaço ou quebra de linha: %s", yytext);
+"{" {return '{';}
+"}" {return '}';}
 
-"?"	{
-        printf("Final de linha: %s\n", yytext);
-        return FIM_LINHA;
-    }
+"?" {return FIM_LINHA;}
 
-"," {
-        printf("Separador de parametro: %s\n", yytext);
-        return ',';
+"," {return ',';}
 
-    }
+[\n] {return NEWLINE;}
 
-.	printf( "Unrecognized character: %s\n", yytext );
+"exit"      {return QUIT;}
+
+.   ;
 
 
 %%

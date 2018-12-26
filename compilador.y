@@ -3,18 +3,41 @@
 #include <stdio.h>
 %}
 
-%token FUNCAO
 %token NUM
 %token FIM_LINHA
+%token NEWLINE QUIT
+%token SOMAR SUBTRAIR MULTIPLICAR DIVIDIR
+
+%start calc
 
 %%
 
+calc:
+		| calc line
+;
+
+line: NEWLINE { printf("NOVA LINHA!\n"); }
+		| EXPRESSAO FIM_LINHA NEWLINE { printf("NOVA LINHA!\n");}
+		| QUIT NEWLINE  { printf("Arquivo Aceito!\n"); exit(0);}
+;
 
 EXPRESSAO: NUM
-		|	FUNCAO '{' NUM ',' NUM '}' FIM_LINHA
-		|	FUNCAO '{' EXPRESSAO ',' NUM '}' FIM_LINHA
-		|	FUNCAO '{' NUM ',' EXPRESSAO '}' FIM_LINHA
-		|	FUNCAO '{' EXPRESSAO ',' EXPRESSAO '}' FIM_LINHA
+		|	SUM 
+		|	SUB
+		|	MULT
+		|	DIV
+;
+
+SUM: SOMAR '{' EXPRESSAO ',' EXPRESSAO '}' 
+;
+
+SUB: SUBTRAIR '{' EXPRESSAO ',' EXPRESSAO '}' 
+;
+
+MULT: MULTIPLICAR '{' EXPRESSAO ',' EXPRESSAO '}' 
+;
+
+DIV: DIVIDIR '{' EXPRESSAO ',' EXPRESSAO '}' 
 ;
 
 %%
