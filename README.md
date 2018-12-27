@@ -25,3 +25,26 @@ gcc -c bison.c
 gcc -c flex.c
 gcc -o compilador.exe flex.o bison.o -lfl -lm
 ```
+### Sintaxe do Interpretador
+
+Operações disponíveis:
+  - Somar;
+  - Subtrair;
+  - Multiplicar;
+  - Dividir.
+
+#### Exemplos de uso
+- Chamadas Simples
+```
+somar{1,2}?
+subtrair{1,2}?
+mutiplicar{1,2}?
+dividir{1,2}?
+```
+- Chamadas Recursivas
+  (Dentro dos parâmetros da função é possível chamar outras funções)
+```
+somar{subtrair{23,20},2}?
+subtrair{dividir{20,2},2}?
+mutiplicar{subtrair{dividir{20,2},2},2}?
+```
